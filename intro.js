@@ -1,4 +1,4 @@
-// var FortuneTeller = require('galvanize-game-mechanics').FortuneTeller
+ var FortuneTeller = require('galvanize-game-mechanics').FortuneTeller
 
 // var question = `Will I find $100 today?`
 // const thePromise = FortuneTeller.ask(question)
@@ -135,16 +135,97 @@
 // randomDelay(log, 3);
 
 
-new Promise(function(resolve, reject) {
-    var x = Math.random();
-    return x < 0.5 ? resolve() : reject([x, 1]);
-  }).then(function() {
-    return new Promise(function(resolve, reject) {
-      var y = Math.random();
-      return y < 0.5 ? resolve() : reject([y, 2]);
-    });
-  }).then(function() {
-    console.log("Both promises sucessfully resolved!");
-  }).catch(function(val) {
-    console.log("Promise #" + val[1] + " rejected :(; value was " + val[0]);
-  });
+// new Promise(function(resolve, reject) {
+//     var x = Math.random();
+//     return x < 0.5 ? resolve() : reject([x, 1]);
+//   }).then(function() {
+//     return new Promise(function(resolve, reject) {
+//       var y = Math.random();
+//       return y < 0.5 ? resolve() : reject([y, 2]);
+//     });
+//   }).then(function() {
+//     console.log("Both promises sucessfully resolved!");
+//   }).catch(function(val) {
+//     console.log("Promise #" + val[1] + " rejected :(; value was " + val[0]);
+//   });
+
+
+
+// var ask1 = FortuneTeller.ask(`Will it rain today?`)
+// var ask2 = FortuneTeller.ask(`Should I order a salad?`)
+// var ask3 = FortuneTeller.ask(`Should I even go outside today?`)
+// var promises = [ ask1, ask2, ask3 ]
+
+// Promise.all(promises)
+//   .then(function (result) {
+//     console.log(result)
+//   })
+
+// var ask1 = FortuneTeller.ask(`Will it rain today?`)
+// var ask2 = FortuneTeller.ask()
+// var ask3 = FortuneTeller.ask(`Should I even go outside today?`)
+// var promises = [ ask1, ask2, ask3 ]
+
+// Promise.all(promises)
+//   .then(function (result) {
+//     console.log(result)
+//   })
+//   .catch(function (error) {
+//     console.error(error)
+//   })
+
+// function logError (error) {
+//     console.error(error)
+//   }
+  
+//   var ask1 = FortuneTeller.ask(`Will it rain today?`).catch(logError)
+//   var ask2 = FortuneTeller.ask().catch(logError)
+//   var ask3 = FortuneTeller.ask(`Should I even go outside today?`).catch(logError)
+//   var promises = [ ask1, ask2, ask3 ]
+  
+//   Promise.all(promises)
+//     .then(function (result) {
+//       console.log(result)
+//     })
+  
+
+
+// FortuneTeller.ask()
+// .catch(function(error) {
+//   console.log('ERROR:', error)
+// })
+// .then(function(result) {
+//   console.log('SUCCESS:', result)
+// })
+
+
+// FortuneTeller.ask()
+//   .catch(function (error) {
+//     console.log('ERROR:', error)
+//     return 'Hello!'
+//   })
+//   .then(function (result) {
+//     console.log('SUCCESS:', result)
+//   })
+
+
+var askFortune = (question) => {
+    return FortuneTeller.ask(question)
+      .then(function (result) {
+          console.log(result)
+        return result.response
+      })
+      .catch(function (result) {
+        return result.error.message
+      })
+  }
+  
+  // In another file, somewhere else with access to `askFortune()`
+  
+  askFortune(`Will it be sunny today?`)
+    .then(function (success) {
+      console.log(success)
+    })
+    .catch(function (error) {
+      console.error(error)
+    })
