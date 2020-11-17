@@ -1,14 +1,23 @@
 var FortuneTeller = require('galvanize-game-mechanics').FortuneTeller
 
-function alwaysAsk (question) {
-  return FortuneTeller.ask(question).then((resolve)=>{
-      console.log(resolve.response)
-  }).catch((fail) =>{
-      console.log(fail.response)
-  })
+let seconedQuestion='Am I blue??'
+
+function sometimeAsk (question=seconedQuestion) {
+    return FortuneTeller.ask(question)
 }
 
-alwaysAsk(`Will it be a good day?`);
+function alwaysAsk (question=`Will it be a good day?`) {
+    return FortuneTeller.ask(question)
+}
+
+sometimeAsk().then((resolve)=>{
+    console.log(resolve.response)
+    
+}).catch((failure)=>{
+    alwaysAsk().catch((failure)=>{
+        console.log(failure.error);
+    });
+});
 
 
 // Use the `alwaysAsk()` function here to log out the response
